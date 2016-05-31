@@ -30,6 +30,13 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/org.freemarker/freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker.version}</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -38,6 +45,7 @@
         <servlet.version>2.4</servlet.version>
         <jsp.version>2.0</jsp.version>
         <spring.version>3.1.2.RELEASE</spring.version>
+        <freemarker.version>2.3.23</freemarker.version>
     </properties>
 
 
