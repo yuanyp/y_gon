@@ -1,0 +1,6 @@
+@CHARSET "UTF-8";
+ul li{
+    float: left;
+    display: inline;
+    margin-left:5px;
+}
