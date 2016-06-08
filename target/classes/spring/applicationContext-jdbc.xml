@@ -5,4 +5,51 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <!-- 1. 设置spring 读取properties -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">          
+        <property name="driverClassName" value="${jdbc.driver.class}" />         
+        <property name="url" value="${jdbc.driver.url}" />         
+        <property name="username" value="${jdbc.driver.user}" />         
+        <property name="password" value="${jdbc.driver.password}" />        
+        <property name="initialSize" value="30" />
+        <property name="maxActive" value="50" />
+        <property name="maxIdle" value="30" />
+        <property name="maxWait" value="60000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="180" />
+        <property name="testOnBorrow" value="true" />       
+        <!--<property name="validationQuery" value="select 1 from dual" />-->
+        <property name="testWhileIdle" value="true" />      
+        <property name="timeBetweenEvictionRunsMillis" value="180000" />        
+        <property name="numTestsPerEvictionRun" value="50" />       
+        <property name="minEvictableIdleTimeMillis" value="120000" />
+    </bean>
+    
+    <!--5.1 配置事务管理器 -->
+    <!--******************TransactionManager***********************-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <bean id="transactionDefinition" class="org.springframework.transaction.support.DefaultTransactionDefinition">
+    </bean>
+
+    <!--6. jdbcTemplate配置开始 -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource">
+        </property>
+    </bean>
+    <!-- jdbcTemplate配置结束-->
+    
+    <bean id="dbDialect" class="com.gon.db.MySQLDBDialect">
+    </bean>
+    
 </beans>

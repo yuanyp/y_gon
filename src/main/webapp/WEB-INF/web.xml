@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
     http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
@@ -8,11 +7,13 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:spring/applicationContext*.xml</param-value>
     </context-param>
-    
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
+    <listener>
+       <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -27,8 +28,16 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>AppContextServlet</servlet-name>
+        <servlet-class>com.gon.controller.util.AppContextServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AppContextServlet</servlet-name>
+        <url-pattern>/AppContextServlet</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>hello</welcome-file>
+        <welcome-file>helloWord.jhtml</welcome-file>
     </welcome-file-list>
 </web-app>
