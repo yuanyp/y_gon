@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="WF_Test_title" name="WF_Test_title">
+    <startEvent id="node1" name="node1" activiti:initiator="initiator"/>
+    <endEvent id="node2" name="node2"/>
+    <userTask id="node4" name="node4" activiti:assignee="${node4_user}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${node4_users}" activiti:elementVariable="node4_user"/>
+    </userTask>
+    <userTask id="node7" name="node7" activiti:assignee="${node7_user}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${node7_users}" activiti:elementVariable="node7_user"/>
+    </userTask>
+    <sequenceFlow sourceRef="node1" targetRef="node4" id="line5" name="Line-line5"/>
+    <sequenceFlow sourceRef="node4" targetRef="node7" id="line8" name="Line-line8"/>
+    <sequenceFlow sourceRef="node7" targetRef="node2" id="line9" name="Line-line9"/>
+  </process>
+</definitions>

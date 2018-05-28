@@ -62,6 +62,50 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
+        <dependency>
+            <groupId>com.manyit</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>${ojdbc14.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring -->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring</artifactId>
+            <version>${activiti.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-orm</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4 -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -69,17 +113,19 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <servlet.version>2.4</servlet.version>
         <jsp.version>2.0</jsp.version>
-        <spring.version>3.1.2.RELEASE</spring.version>
+        <spring.version>3.2.18.RELEASE</spring.version>
         <freemarker.version>2.3.23</freemarker.version>
         <common.version>1.1.0-SNAPSHOT</common.version>
         <juniversalchardet.version>1.0.3</juniversalchardet.version>
         <mysql-connector-java.version>5.1.34</mysql-connector-java.version>
         <quartz.version>1.8.6</quartz.version>
+        <ojdbc14.version>1.0</ojdbc14.version>
+        <activiti.version>5.22.0</activiti.version>
     </properties>
 
 
     <build>
-        <finalName>nerisoa</finalName>
+        <finalName>y_gon</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -89,9 +135,9 @@
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>utf-8</encoding>
-                    <verbal>true</verbal>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>

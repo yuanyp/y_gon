@@ -16,9 +16,9 @@ public class ConvertGBK2UTF8 {
 //        converFileCharSet("C:\\Program Files\\Java\\work_space\\cms\\src\\main\\java", "gbk", "utf-8");
 //        converFileCharSet("C:\\Program Files\\Java\\work_space\\cms\\src\\main\\webapp", "gbk", "utf-8");
         converFileCharSet("C:\\Program Files\\Java\\work_space\\cms\\src\\main\\webapp\\WEB-INF\\common", "gbk", "utf-8");
-        
+
     }
-    
+
     public static void converFileCharSet(String pFileURI,String pCharSet,String rCharSet){
         List<File> resultFile = new ArrayList<File>();
         File pFile = new File(pFileURI);
@@ -34,7 +34,7 @@ public class ConvertGBK2UTF8 {
             }
         }
     }
-    
+
     private static void getDirectoryFiles(File file,List<File> resultFile){
         if(null != file && null != resultFile){
             if(file.isDirectory()){
@@ -47,13 +47,13 @@ public class ConvertGBK2UTF8 {
             }
         }
     }
-    
+
     /**
      * 把文件从p编码转换成r编码，具体根据传入的参数决定
      * TODO <功能简述> <br/>
      * TODO <功能详细描述>
      * @param orgFile
-     * @param p 
+     * @param p
      * @param r
      * @throws Exception
      */

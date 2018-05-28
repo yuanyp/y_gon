@@ -7,7 +7,7 @@
 
     <!-- 激活@Controller模式 -->
     <mvc:annotation-driven />
-    <context:component-scan base-package="com.gon.controller" /> 
+    <context:component-scan base-package="com.gon" />
     
     <!-- 定义JSP文件的位置 -->
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
