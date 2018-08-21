@@ -7,7 +7,21 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:spring/applicationContext*.xml</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>y_help_web.root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>WEB-INF/classes/log4j.properties</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>6000</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -21,7 +35,6 @@
             <param-name>namespace</param-name>
             <param-value>classes/spring/dispatcher</param-value>
         </init-param>
-        <load-up-startup>1</load-up-startup>
     </servlet>
 
     <servlet-mapping>
@@ -38,6 +51,6 @@
         <url-pattern>/AppContextServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>helloWord.jhtml</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

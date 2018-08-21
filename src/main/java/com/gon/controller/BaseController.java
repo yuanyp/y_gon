@@ -13,5 +13,6 @@ public class BaseController {
         String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
         model.addAttribute("path", path);
         model.addAttribute("basePath", basePath);
-    } 
+    }
+
 }

@@ -1,1 +1,11 @@
+*.iml
+*/*.iml
+*.idea
+*/target/*
+target/*
+target_compress/*
+overlays/*
 /target/
+.settings/*
+.project
+.classpath
