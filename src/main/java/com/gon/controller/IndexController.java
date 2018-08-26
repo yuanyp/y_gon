@@ -1,19 +1,23 @@
 package com.gon.controller;
 
 
-import org.apache.commons.io.FileUtils;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.google.gson.Gson;
 
 
 @Controller
@@ -33,5 +37,22 @@ public class IndexController extends BaseController{
         }
         ModelAndView mv = new ModelAndView("/index/main.jsp","command","LOGIN SUCCESS");
         return mv;
+    }
+    
+    @RequestMapping(value="key_opt")
+    public void key_opt(HttpServletRequest request,HttpServletResponse response){
+    	Map<String,Object> ret = new HashMap<>();
+    	Gson gson = new Gson();
+    	PrintWriter writer = null;
+        try {
+        	Base.press.keyPress(Base.press.I);
+        	writer = response.getWriter();
+        	ret.put("code", 0);
+        } catch (Exception e) {
+        	logger.error("", e);
+        	ret.put("code", -1);
+            ret.put("error_msg", e.getMessage());
+        }
+        writer.print(gson.toJson(ret));
     }
 }
