@@ -38,15 +38,18 @@ function post_mouse_opt(type){
     },"json");
 }
 function refresh_desk(){
-    $.post("refresh",function (data){
-        if(data.code != 0){
-            alert(data.error_msg);
-        }else{
-        	var $img = $("#demo").find("img");
-        	var src = "resource/images/desktop.png";
-            $img.attr("src",src + "?_t=" + new Date().getTime());
-		}
-    },"json");
+	setTimeout(function (){
+		$.post("refresh",function (data){
+	        if(data.code != 0){
+	            alert(data.error_msg);
+	        }else{
+	        	var $img = $("#demo").find("img");
+	        	var src = "resource/images/desktop.png";
+	            $img.attr("src",src + "?_t=" + new Date().getTime());
+			}
+	    },"json");
+	}, 1500);
+    
 }
 function whichButton(event)
 {

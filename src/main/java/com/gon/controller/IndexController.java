@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,13 +60,44 @@ public class IndexController extends BaseController{
         ModelAndView mv = new ModelAndView("/index/main.jsp","command","LOGIN SUCCESS");
         return mv;
     }
+
+    @RequestMapping(value="mouse_opt")
+    public void mouse_opt(HttpServletRequest request,HttpServletResponse response){
+    	Map<String,Object> ret = new HashMap<>();
+    	Gson gson = new Gson();
+    	PrintWriter writer = null;
+        try {
+        	String x_y = request.getParameter("x_y");
+        	String l = request.getParameter("l");
+        	if(StringUtils.isNotBlank(x_y)){
+        		String[] xy = x_y.split(",");
+        		if(xy.length == 2){
+        			int x = Integer.parseInt(xy[0]);
+        			int y = Integer.parseInt(xy[1]);
+        			Base.robot.delay(200);
+        			logger.info("x_y:" + x_y +"," + Boolean.valueOf(l));
+            		Base.mouse.mouseClick(x, y, Boolean.valueOf(l));
+            		Base.robot.delay(200);
+        		}
+        	}
+        	writer = response.getWriter();
+        	ret.put("code", 0);
+        } catch (Exception e) {
+        	logger.error("", e);
+        	ret.put("code", -1);
+            ret.put("error_msg", e.getMessage());
+        }
+        writer.print(gson.toJson(ret));
+    }
+    
     @RequestMapping(value="key_opt")
     public void key_opt(HttpServletRequest request,HttpServletResponse response){
     	Map<String,Object> ret = new HashMap<>();
     	Gson gson = new Gson();
     	PrintWriter writer = null;
         try {
-        	Base.press.keyPress(Base.press.I);
+        	int k = Integer.parseInt(request.getParameter("key"));
+        	Base.press.keyPress(k);
         	writer = response.getWriter();
         	ret.put("code", 0);
         } catch (Exception e) {
