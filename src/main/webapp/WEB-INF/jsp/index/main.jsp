@@ -8,8 +8,8 @@
     <meta charset="utf-8">
     <title>main</title>
     <link rel="stylesheet" href="resource/plugin/bootstrap/css/bootstrap.min.css">
-    <script src="resource/plugin/bootstrap/js/bootstrap.js"></script>
     <script src="resource/plugin/jquery/jquery.min.js"></script>
+    <script src="resource/plugin/bootstrap/js/bootstrap.js"></script>
     <script src="resource/js/main.js"></script>
     <style>
         .fakeimg {
@@ -39,8 +39,12 @@
     </div>
 </nav>
 
-<div>
-    <img src="resource/images/desktop.png" width="1366" height="768"/>
+当前鼠标坐标为：
+X：<span id="mp_x"></span>
+Y：<span id="mp_y"></span>
+
+<div id="demo" onmousemove="DisplayCoord(event)" onmousedown="whichButton(event)">
+    <img src="resource/images/desktop.png"/>
 </div>
 
 </body>
