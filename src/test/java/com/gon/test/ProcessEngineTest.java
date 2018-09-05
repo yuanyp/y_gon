@@ -38,7 +38,7 @@ public class ProcessEngineTest extends
 	public void testSubmitTask() {
 		long s = System.currentTimeMillis();
 		String userid = "1001";
-		List<org.activiti.engine.task.Task> list = pes.getProcessInstanceTask("10901");
+		List<org.activiti.engine.task.Task> list = pes.getProcessInstanceTask("155001");
 		System.out.printf("用户任务列表>>" + list);
 		List<String> assList = new ArrayList<String>();
 		for(int i=0,j=1000;i<j;i++){
@@ -54,7 +54,7 @@ public class ProcessEngineTest extends
 	//@Test
 	public void testSubmitTaskItem() {
 		long s = System.currentTimeMillis();
-		pes.submitTask("1220", null);
+		pes.submitTask("81020", null);
 		long e = System.currentTimeMillis();
 		System.out.printf("耗时>" + (e-s) + "\n");
 	}
@@ -76,6 +76,6 @@ public class ProcessEngineTest extends
 		assList.add("1001");
 		Map<String, Object> assMap = new HashMap<String, Object>();
 		assMap.put("node4_users", assList);
-		System.out.printf("启动流程》》："+pes.startProcess(processName,assMap));
+		System.out.println("启动流程》》："+pes.startProcess(processName,assMap));
 	}
 }

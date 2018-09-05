@@ -20,9 +20,13 @@ import com.manyit.common.util.StringUtil;
 
 @Controller
 public class HelloWordController extends BaseController{
-    @RequestMapping(value="main")
-    public ModelAndView main(HttpServletRequest request,HttpServletResponse response){
-        
+    @RequestMapping(value="html")
+    public ModelAndView html(HttpServletRequest request,HttpServletResponse response){
+        ModelAndView mv = new ModelAndView("/index/main.jsp","command","LOGIN SUCCESS");
+        return mv;
+    }
+    @RequestMapping(value="jsp")
+    public ModelAndView jsp(HttpServletRequest request,HttpServletResponse response){
         ModelAndView mv = new ModelAndView("/index/main.jsp","command","LOGIN SUCCESS");
         return mv;
     }
