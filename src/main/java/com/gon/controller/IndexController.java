@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gon.controller.util.AppContextServlet;
 import com.google.gson.Gson;
 
 
@@ -44,9 +45,11 @@ public class IndexController extends BaseController{
         Gson gson = new Gson();
         PrintWriter writer = null;
         try {
-        	if(name.equals("yuanyingpu") && pass.equals("yuanyingpu")) {
+        	String config_name = AppContextServlet.getProperty("config_name");
+        	String config_pass = AppContextServlet.getProperty("config_pass");
+        	if(name.equals(config_name) && pass.equals(config_pass)) {
         		ret.put("code", 0);
-        		request.getSession().setAttribute("_userinfo", "yuanyingpu");
+        		request.getSession().setAttribute("_userinfo", config_name);
         	}else {
         		ret.put("error_msg", "账号密码错误");
         	}
