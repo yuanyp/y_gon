@@ -17,7 +17,8 @@
 						var $value = $write.val();
 							$this = $(this),
 							character = $this.find('span').length ? $this.find('span').html() : $this.html();
-						$write.val($write.val() + character);
+						$write.val(character);
+						$('body').find('#keyboardContainer').remove();
 					});
 				}
 			}
