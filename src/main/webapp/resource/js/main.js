@@ -1,5 +1,8 @@
 var timer = null;
 $(function (){
+	$.ajaxSetup({
+	    async : false
+	});
 	$("#key_opt").click(key_opt);
 	$("#demo").click(function () {
         timer && clearTimeout(timer);
@@ -9,9 +12,45 @@ $(function (){
     });
     $("#demo").dblclick(function () {
         timer && clearTimeout(timer);
-        post_mouse_opt(1)
+        post_mouse_opt(1);
     });
+    
+    var d = false;
+    $("#open_ys").click(function () {
+		var postData = {"x_y":"287,14","l":false,"d":d};//右键
+    	mouse_opt(postData,100);
+    	postData = {"x_y":"315,168","l":true,"d":d};//左键
+    	mouse_opt(postData,100);
+    });
+    $("#open_app").click(function () {
+    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	mouse_opt(postData,100);
+    });
+    $("#show_desktop").click(function () {
+    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	mouse_opt(postData,100);
+    });
+    $("#open_help").click(function () {
+    	var postData = {"x_y":"1275,1020","l":false,"d":d};//右键
+    	mouse_opt(postData,100);
+    	postData = {"x_y":"1275,1020","l":true,"d":d};//左键
+    	mouse_opt(postData,100);
+    });
+    $("#help_start").click(function () {
+    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	mouse_opt(postData,100);
+    });
+    $("#close_ys").click(function () {
+    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	mouse_opt(postData,100);
+    });
+    $("#close_help").click(function () {
+    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	mouse_opt(postData,100);
+    });
+    
 });
+
 /**
  * 0:左键；1:左键双击；2：右键
  * @param type
@@ -29,13 +68,23 @@ function post_mouse_opt(type){
 		d = true;
 	}
 	var postData = {"x_y":x_y,"l":l,"d":d};
-    $.post("mouse_opt",postData,function (data){
-        if(data.code != 0){
-            alert(data.error_msg);
-        }else{
-            refresh_desk();
-		}
-    },"json");
+	mouse_opt(postData,0,true);
+}
+function mouse_opt(postData,delay,refresh){
+	if(!delay){
+		delay = 0;
+	}
+	setTimeout(function (){
+		$.post("mouse_opt",postData,function (data){
+	        if(data.code != 0){
+	            alert(data.error_msg);
+	        }else{
+	        	if(refresh){
+	        		refresh_desk();
+	        	}
+			}
+	    },"json");
+	}, delay);
 }
 function refresh_desk(){
 	setTimeout(function (){

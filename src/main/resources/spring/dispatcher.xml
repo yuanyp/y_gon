@@ -5,10 +5,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- 激活@Controller模式 -->
-    <mvc:annotation-driven />
-    <context:component-scan base-package="com.gon" />
-    
     <!-- 定义JSP文件的位置 -->
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewNames" value="*.jsp" />
@@ -16,7 +12,4 @@
         <property name="suffix" value="" />
         <property name="order" value="0"/>
     </bean>
-    <!-- 定义无需Controller的url<->view直接映射 
-    <mvc:view-controller path="/" view-name="index.jsp" />-->
-    <mvc:resources mapping="/resource/**" location="/resource/"/>
 </beans>

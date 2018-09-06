@@ -19,6 +19,7 @@
     </style>
 </head>
 <body>
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -31,9 +32,13 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active" id="mouse_opt"><a href="#">鼠标操作</a></li>
-                <li><a href="#" id="key_opt">键盘操作</a></li>
-                <li><a href="#" id="cmd_opt">命令行</a></li>
+                <li class="active" id="mouse_opt"><a href="#" id="open_ys">打开模拟器</a></li>
+                <li><a href="#" id="open_app">打开APP</a></li>
+                <li><a href="#" id="show_desktop">显示桌面</a></li>
+                <li><a href="#" id="open_help">打开辅助</a></li>
+                <li><a href="#" id="help_start">开始</a></li>
+                <li><a href="#" id="close_ys">关闭模拟器</a></li>
+                <li><a href="#" id="close_help">关闭辅助</a></li>
             </ul>
         </div>
     </div>

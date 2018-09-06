@@ -36,6 +36,28 @@ public class IndexController extends BaseController{
             logger.error("", e);
         }
     }
+    @RequestMapping(value="login")
+    public void login(HttpServletRequest request,HttpServletResponse response){
+    	String name = request.getParameter("name");
+    	String pass = request.getParameter("pass");
+        Map<String,Object> ret = new HashMap<>();
+        Gson gson = new Gson();
+        PrintWriter writer = null;
+        try {
+        	if(name.equals("yuanyingpu") && pass.equals("yuanyingpu")) {
+        		ret.put("code", 0);
+        		request.getSession().setAttribute("_userinfo", "yuanyingpu");
+        	}else {
+        		ret.put("error_msg", "账号密码错误");
+        	}
+            writer = response.getWriter();
+        } catch (Exception e) {
+            logger.error("", e);
+            ret.put("code", -1);
+            ret.put("error_msg", e.getMessage());
+        }
+        writer.print(gson.toJson(ret));
+    }
     @RequestMapping(value="refresh")
     public void refresh(HttpServletRequest request,HttpServletResponse response){
         String realPath = request.getSession().getServletContext().getRealPath("/");
@@ -107,4 +129,5 @@ public class IndexController extends BaseController{
         }
         writer.print(gson.toJson(ret));
     }
+    
 }
