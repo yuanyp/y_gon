@@ -3,7 +3,6 @@ $(function (){
 	$.ajaxSetup({
 	    async : false
 	});
-	$("#key_opt").click(key_opt);
 	$("#demo").click(function () {
         timer && clearTimeout(timer);
         timer = setTimeout(function (){
@@ -49,8 +48,23 @@ $(function (){
     	mouse_opt(postData,100);
     });
     
+    bind_key_opt();
 });
-
+function bind_key_opt(){
+	$("#key_opt").click(function (){
+    	$('#myModal').modal('show');
+    	$("#myModal input").val("");
+    });
+	$("#key_1").cocoKeyboard();
+	$("#key_2").cocoKeyboard();
+	$("#key_opt_submit").click(function (){
+		var key_1 = $("#key_1").val();
+		if(key_1){
+			var key_2 = $("#key_2").val();
+			key_opt({"key_1":key_1,"key_2":key_2});
+		}
+	});
+}
 /**
  * 0:左键；1:左键双击；2：右键
  * @param type
@@ -137,10 +151,10 @@ function DisplayCoord(event){
  * 键盘操作
  * @returns
  */
-function key_opt(e){
-	$.post("key_opt",function (data){
-		if(data.code == 0){
-			alert("操作成功");	
-		}
+function key_opt(postData){
+	$.post("key_opt",postData,function (data){
+		if(data.code != 0){
+            alert(data.error_msg);
+        }
 	},"json");
 }

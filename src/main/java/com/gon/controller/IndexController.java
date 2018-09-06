@@ -121,8 +121,20 @@ public class IndexController extends BaseController{
     	Gson gson = new Gson();
     	PrintWriter writer = null;
         try {
-        	int k = Integer.parseInt(request.getParameter("key"));
-        	Base.press.keyPress(k);
+        	String k1 = request.getParameter("key_1");
+        	String k2 = request.getParameter("key_2");
+        	int kk1 = -1;
+        	int kk2 = -1;
+        	if(StringUtils.isNotBlank(k1) && StringUtils.isNotBlank(k2)) {
+        		kk1 = Base.robot.StringToKey(k1);
+    			kk2 = Base.robot.StringToKey(k2);
+    			Base.press.groupPress(kk1, kk2);
+        	}else {
+        		if(StringUtils.isNotBlank(k1)) {
+        			kk1 = Base.robot.StringToKey(k1);
+        			Base.press.keyPress(kk1);
+        		}
+        	}
         	writer = response.getWriter();
         	ret.put("code", 0);
         } catch (Exception e) {
