@@ -16,35 +16,36 @@ $(function (){
     
     var d = false;
     $("#open_ys").click(function () {
-		var postData = {"x_y":"287,14","l":false,"d":d};//右键
+		var postData = {"x_y":"518,156","l":false,"d":d};//右键
     	mouse_opt(postData,100);
-    	postData = {"x_y":"315,168","l":true,"d":d};//左键
+    	postData = {"x_y":"558,165","l":true,"d":d};//左键
     	mouse_opt(postData,100);
     });
     $("#open_app").click(function () {
-    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	var postData = {"x_y":"399,300","l":true,"d":d};
     	mouse_opt(postData,100);
     });
     $("#show_desktop").click(function () {
-    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	var postData = {"x_y":"1904,1055","l":true,"d":d};
     	mouse_opt(postData,100);
     });
     $("#open_help").click(function () {
-    	var postData = {"x_y":"1275,1020","l":false,"d":d};//右键
+    	var postData = {"x_y":"428,925","l":false,"d":d};//右键
     	mouse_opt(postData,100);
-    	postData = {"x_y":"1275,1020","l":true,"d":d};//左键
+		//43 632
+    	postData = {"x_y":"471,300","l":true,"d":d};//左键
     	mouse_opt(postData,100);
     });
     $("#help_start").click(function () {
-    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	var postData = {"x_y":"265,198","l":true,"d":d};
     	mouse_opt(postData,100);
     });
     $("#close_ys").click(function () {
-    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	var postData = {"x_y":"785,13","l":true,"d":d};
     	mouse_opt(postData,100);
     });
     $("#close_help").click(function () {
-    	var postData = {"x_y":"1275,1020","l":true,"d":d};
+    	var postData = {"x_y":"1004,203","l":true,"d":d};
     	mouse_opt(postData,100);
     });
     
