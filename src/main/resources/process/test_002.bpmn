@@ -7,7 +7,8 @@
       <multiInstanceLoopCharacteristics activiti:collection="${node4_users}" activiti:elementVariable="node4_user" isSequential="false"/>
     </userTask>
     <userTask activiti:assignee="${node7_user}" activiti:exclusive="true" id="node7" name="node7">
-      <multiInstanceLoopCharacteristics activiti:collection="${node7_users}" activiti:elementVariable="node7_user" isSequential="false"/>
+      <multiInstanceLoopCharacteristics activiti:collection="${node7_users}" activiti:elementVariable="node7_user" isSequential="false">        
+      </multiInstanceLoopCharacteristics>
     </userTask>
     <sequenceFlow id="line5" name="Line-line5" sourceRef="node1" targetRef="node4"/>
     <sequenceFlow id="line8" name="Line-line8" sourceRef="node4" targetRef="node7"/>

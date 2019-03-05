@@ -16,7 +16,7 @@ public class TestMiPush {
     public static void main(String[] args) {
         try {
             TestMiPush.sendMessage1();
-            new URL("");d
+            new URL("");
         } catch (Exception e) {
             e.printStackTrace();
         }

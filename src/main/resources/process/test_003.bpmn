@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="WF_QB" name="WF_QB">
+    <startEvent id="node1" name="node1" activiti:initiator="initiator"/>
+    <endEvent id="node2" name="node2"/>
+    <userTask id="node4" name="node4" activiti:assignee="${node4_user}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${node4_users}" activiti:elementVariable="node4_user"/>
+    </userTask>
+    <userTask id="node5" name="node5" activiti:assignee="${node5_user}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${node5_users}" activiti:elementVariable="node5_user">
+        
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <exclusiveGateway id="node13" name="node13"/>
+    <userTask id="node16" name="node16" activiti:assignee="${node16_user}">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${node16_users}" activiti:elementVariable="node16_user"/>
+    </userTask>
+    <sequenceFlow sourceRef="node1" targetRef="node4" id="line6" name="Line-line6"/>
+    <sequenceFlow sourceRef="node4" targetRef="node5" id="line7" name="Line-line7"/>
+    <sequenceFlow sourceRef="node5" targetRef="node13" id="line14" name="Line-line14"/>
+    <sequenceFlow sourceRef="node13" targetRef="subNode12" id="line15" name="Line-line15">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ gateway_node13 eq 'node20' }]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow sourceRef="node13" targetRef="node16" id="line17" name="Line-line17">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ gateway_node13 eq 'node16' }]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow sourceRef="node16" targetRef="node2" id="line18" name="Line-line18"/>
+    <sequenceFlow sourceRef="subNode12" targetRef="node16" id="line30" name="Line-line30"/>
+    <subProcess id="subNode12" name="subNode12">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${node20_users}" activiti:elementVariable="node20_user"/>
+      <startEvent id="node19" name="node19" activiti:initiator="initiator"/>
+      <userTask id="node20" name="node20" activiti:candidateUsers="${node20_user}"/>
+      <userTask id="node21" name="node21" activiti:assignee="${node21_user}">
+        <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${node21_users}" activiti:elementVariable="node21_user"/>
+      </userTask>
+      <endEvent id="node22" name="node22"/>
+      <exclusiveGateway id="node26" name="node26"/>
+      <sequenceFlow sourceRef="node19" targetRef="node20" id="line23" name="Line-line23"/>
+      <sequenceFlow sourceRef="node20" targetRef="node21" id="line24" name="Line-line24"/>
+      <sequenceFlow sourceRef="node21" targetRef="node26" id="line27" name="Line-line27"/>
+      <sequenceFlow sourceRef="node26" targetRef="node20" id="line28" name="Line-line28">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ gateway_node13 eq 'node20'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow sourceRef="node26" targetRef="node22" id="line29" name="Line-line29">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${ gateway_node13 eq 'node22' }]]></conditionExpression>
+      </sequenceFlow>
+    </subProcess>
+  </process>
+</definitions>

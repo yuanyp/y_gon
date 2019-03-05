@@ -32,7 +32,7 @@ import freemarker.template.TemplateException;
 @Component
 public class Task {
 
-    @Scheduled(cron = "0/5 * *  * * ? ")
+    //@Scheduled(cron = "0/5 * *  * * ? ")
     // 每5秒执行一次
     public void createContentHtml() {
         System.out.println("生成开始");
