@@ -4,3 +4,13 @@ ul li{
     display: inline;
     margin-left:5px;
 }
+.fakeimg {
+    height: 200px;
+    background: #aaa;
+}
+.info{
+    color: #f0e3e3;
+}
+.logout{
+    float: right;
+}

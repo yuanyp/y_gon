@@ -1,148 +1,96 @@
 package com.gon.controller;
 
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.gon.controller.util.AppContextServlet;
+import com.gon.controller.util.DateTimeUtil;
+import com.gon.entity.User;
+import com.gon.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gon.controller.util.AppContextServlet;
-import com.google.gson.Gson;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @Controller
-public class IndexController extends BaseController{
+public class IndexController extends BaseController {
 
     private Logger logger = Logger.getLogger(this.getClass());
 
-    private void refreshDesk(String realPath){
-        BufferedImage image = Base.robot.screenCapture();
-        String path = realPath + "resource/images/desktop.png";
-        try {
-            FileOutputStream out = new FileOutputStream(new File(path));
-            ImageIO.write(image,"png",out);
-        } catch (Exception e) {
-            logger.error("", e);
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(value = "login", produces = _PRODUCES)
+    @ResponseBody
+    public Result login(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String name = request.getParameter("name");
+        String pass = request.getParameter("pass");
+        Result ret = getResult();
+        User user = userService.findUser(name, pass);
+        if (null != user) {
+            ret.setSuccess(true);
+        } else {
+            String config_name = AppContextServlet.getProperty(_CONFIG_NAME);
+            String config_pass = AppContextServlet.getProperty(_CONFIG_PASS);
+            if (StringUtils.equalsIgnoreCase(name, config_name) && StringUtils.equalsIgnoreCase(pass, config_pass)) {
+                ret.setSuccess(true);
+                user = getSuperUser(config_name);
+            } else {
+                ret.setError_msg("账号密码错误");
+            }
         }
-    }
-    @RequestMapping(value="login")
-    public void login(HttpServletRequest request,HttpServletResponse response){
-    	String name = request.getParameter("name");
-    	String pass = request.getParameter("pass");
-        Map<String,Object> ret = new HashMap<>();
-        Gson gson = new Gson();
-        PrintWriter writer = null;
-        try {
-        	String config_name = AppContextServlet.getProperty("config_name");
-        	String config_pass = AppContextServlet.getProperty("config_pass");
-        	if(name.equals(config_name) && pass.equals(config_pass)) {
-        		ret.put("code", 0);
-        		request.getSession().setAttribute("_userinfo", config_name);
-        	}else {
-        		ret.put("error_msg", "账号密码错误");
-        	}
-            writer = response.getWriter();
-        } catch (Exception e) {
-            logger.error("", e);
-            ret.put("code", -1);
-            ret.put("error_msg", e.getMessage());
+        if (ret.success()) {
+            user.clearSensitiveInfo();
+            ret.setField(_USERINFO, user);
+            request.getSession().setAttribute(_USERINFO, user);
         }
-        writer.print(gson.toJson(ret));
+        return ret;
     }
-    @RequestMapping(value="refresh")
-    public void refresh(HttpServletRequest request,HttpServletResponse response){
-        String realPath = request.getSession().getServletContext().getRealPath("/");
-        refreshDesk(realPath);
-        Map<String,Object> ret = new HashMap<>();
-        Gson gson = new Gson();
-        PrintWriter writer = null;
-        try {
-            writer = response.getWriter();
-            ret.put("code", 0);
-        } catch (Exception e) {
-            logger.error("", e);
-            ret.put("code", -1);
-            ret.put("error_msg", e.getMessage());
-        }
-        writer.print(gson.toJson(ret));
-    }
-    @RequestMapping(value="index")
-    public ModelAndView main(HttpServletRequest request,HttpServletResponse response){
-        String realPath = request.getSession().getServletContext().getRealPath("/");
-        refreshDesk(realPath);
-        ModelAndView mv = new ModelAndView("/index/main.jsp","command","LOGIN SUCCESS");
+
+    @RequestMapping(value = "logout", produces = _PRODUCES)
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.getSession().invalidate();
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/index.jsp");
         return mv;
     }
 
-    @RequestMapping(value="mouse_opt")
-    public void mouse_opt(HttpServletRequest request,HttpServletResponse response){
-    	Map<String,Object> ret = new HashMap<>();
-    	Gson gson = new Gson();
-    	PrintWriter writer = null;
-        try {
-        	String x_y = request.getParameter("x_y");
-        	String l = request.getParameter("l");
-        	if(StringUtils.isNotBlank(x_y)){
-        		String[] xy = x_y.split(",");
-        		if(xy.length == 2){
-        			int x = Integer.parseInt(xy[0]);
-        			int y = Integer.parseInt(xy[1]);
-        			Base.robot.delay(200);
-        			logger.info("x_y:" + x_y +"," + Boolean.valueOf(l));
-            		Base.mouse.mouseClick(x, y, Boolean.valueOf(l));
-            		Base.robot.delay(200);
-        		}
-        	}
-        	writer = response.getWriter();
-        	ret.put("code", 0);
-        } catch (Exception e) {
-        	logger.error("", e);
-        	ret.put("code", -1);
-            ret.put("error_msg", e.getMessage());
+    /**
+     * 校验用户卡密有效期
+     *
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "api/check_user_card", produces = _PRODUCES)
+    @ResponseBody
+    public Result checkUserCard(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String name = request.getParameter("login_name");
+        String cardInfo = request.getParameter("card_info");
+        if(StringUtils.isBlank(name) || StringUtils.isBlank(cardInfo)){
+            return null;
         }
-        writer.print(gson.toJson(ret));
-    }
-    
-    @RequestMapping(value="key_opt")
-    public void key_opt(HttpServletRequest request,HttpServletResponse response){
-    	Map<String,Object> ret = new HashMap<>();
-    	Gson gson = new Gson();
-    	PrintWriter writer = null;
-        try {
-        	String k1 = request.getParameter("key_1");
-        	String k2 = request.getParameter("key_2");
-        	int kk1 = -1;
-        	int kk2 = -1;
-        	if(StringUtils.isNotBlank(k1) && StringUtils.isNotBlank(k2)) {
-        		kk1 = Base.robot.StringToKey(k1);
-    			kk2 = Base.robot.StringToKey(k2);
-    			Base.press.groupPress(kk1, kk2);
-        	}else {
-        		if(StringUtils.isNotBlank(k1)) {
-        			kk1 = Base.robot.StringToKey(k1);
-        			Base.press.keyPress(kk1);
-        		}
-        	}
-        	writer = response.getWriter();
-        	ret.put("code", 0);
-        } catch (Exception e) {
-        	logger.error("", e);
-        	ret.put("code", -1);
-            ret.put("error_msg", e.getMessage());
+        Result ret = getResult();
+        User user = userService.findUserByCard(name,cardInfo);
+        if (null != user) {
+            String expiresDate = user.getExpiresDate();
+            Date date = DateTimeUtil.parseToDate(expiresDate, DateTimeUtil.FMT_yyyyMMddHHmmss);
+            int a = DateTimeUtil.compareTwoDate(date, DateTimeUtil.getSystemDate());
+            if (a == -1 || a == 0) {//有效期必须大于等于当前时间
+                ret.setSuccess(true);
+                ret.setField("expires_date", user.getExpiresDate());
+            }
         }
-        writer.print(gson.toJson(ret));
+        return ret;
     }
-    
+
+    @RequestMapping(value = "index")
+    public ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView("/index/main.jsp", "command", "LOGIN SUCCESS");
+        return mv;
+    }
 }

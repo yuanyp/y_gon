@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="resource/plugin/bootstrap/css/bootstrap.min.css">
     <script src="resource/plugin/jquery/jquery.min.js"></script>
     <script src="resource/plugin/bootstrap/js/bootstrap.js"></script>
+	<script src="resource/plugin/md5.js"></script>
     <script src="resource/js/login.js"></script>
 <title>login</title>
 </head>
@@ -26,19 +27,19 @@
 			<div class="modal-body">
 				<div class="input-group">
 					<span class="input-group-addon">账号</span>
-					<input type="text" id="name" class="form-control" placeholder="清输入账号">
+					<input type="text" id="name" class="form-control" placeholder="请输入账号">
 				</div>
 				<br>
 				<div class="input-group">
 					<span class="input-group-addon">密码</span>
-					<input type="password" id="pass" class="form-control" placeholder="清输入密码">
+					<input type="password" id="pass" class="form-control" placeholder="请输入密码">
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				</button>
 				<button id="login" type="button" class="btn btn-primary">
-					提交
+					登录
 				</button>
 			</div>
 		</div><!-- /.modal-content -->
